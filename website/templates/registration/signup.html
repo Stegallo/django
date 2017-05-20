@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Login{% endblock %}
-
 {% block content %}
-  <h2>Login</h2>
+  <h2>Signup</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
+    <button type="submit">Signup</button>
   </form>
   <br>
   <p><strong>-- OR --</strong></p>
-  <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+  <a href="{% url 'social:begin' 'facebook' %}">Signup with Facebook</a>
 {% endblock %}

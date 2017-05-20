@@ -86,3 +86,4 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = PROJECT_DIR.parent.parent.child('media')
 MEDIA_URL = '/media/'
+LOGIN_REDIRECT_URL = 'home'

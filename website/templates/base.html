@@ -12,8 +12,24 @@
   <link href="{% static 'css/app.css' %}" rel="stylesheet">
 </head>
 <body>
-  {% block content %}
-  {% endblock %}
+  <header>
+    <h1>Sample Website Login</h1>
+    {% if user.is_authenticated %}
+      Hi {{ user.username }}!
+      <a href="{% url 'logout' %}">logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">login</a>
+    {% endif %}
+  </header>
+  <hr>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+  <hr>
+  <footer>
+    <a href="http://stegallo.com">stegallo.com</a>
+  </footer>
   <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

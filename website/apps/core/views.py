@@ -6,6 +6,13 @@ from django.shortcuts import render, redirect
 
 from social_django.models import UserSocialAuth
 
+
+from stravalib.client import Client
+
+
+StravaClient = Client()
+
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -23,7 +30,32 @@ def signup(request):
 
 @login_required
 def home(request):
-    return render(request, 'core/home.html')
+    user = request.user
+    try:
+        strava_login = user.social_auth.get(provider='strava')
+        print(strava_login.uid)
+        print(strava_login.extra_data['access_token'])
+        StravaClient.access_token = strava_login.extra_data['access_token']
+        athlete = StravaClient.get_athlete()
+        print(athlete)
+        friendslist = []
+        #for i in athlete.friends:
+            #print(i)
+        activities = StravaClient.get_activities(after='2017-05-01', limit=1)
+        #for i in activities:
+            #print(i)
+        lastactivity = None
+        if len(list(activities)) > 0:
+            lastactivity = list(activities)[0]
+        print(lastactivity)
+    except UserSocialAuth.DoesNotExist:
+        strava_login = None
+        athlete = None
+        lastactivity = None
+
+#    StravaClient.access_token = user.athlete.stravatoken
+#    athlete = StravaClient.get_athlete()
+    return render(request, 'core/home.html', {'athlete':athlete, 'lastactivity':lastactivity})
 
 @login_required
 def settings(request):

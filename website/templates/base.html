@@ -34,16 +34,25 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
+        <header>
         <a class="navbar-brand" href="/">Sample Website</a>
         <div class="nav-collapse">
           {% block navbar_right %}
           <ul class="nav navbar-nav pull-right">
-            {% if not session.logged_in %}
-              <li><a href="/login">Login or Signup</a></li>
+            {% if user.is_authenticated %}
+              You are signed in as <strong>{{ user.username }}</strong> /
+              <a href="{% url 'home' %}">home</a> /
+              <a href="{% url 'settings' %}">settings</a> /
+              <a href="{% url 'password' %}">change password</a> /
+              <a href="{% url 'logout' %}">logout</a>
             {% else %}
-              <li><a href="/logout">Logout</a></li>
+              <a href="{% url 'login' %}">login</a> /
+              <a href="{% url 'signup' %}">signup</a>
             {% endif %}
           </ul>
+
+          <hr>
+        </header>
           {% endblock %}
         </div><!--/.nav-collapse -->
       </div>
@@ -51,8 +60,15 @@
     {% endblock %}
     <div class="container page">
         <div class="content">
-          {% block content %}
-          {% endblock %}
+          <main>
+            {% for message in messages %}
+              <p style="color: {% if message.tags == 'success' %}green{% elif message.tags == 'error' %}red{% endif %}">
+                {{ message }}
+              </p>
+            {% endfor %}
+            {% block content %}
+            {% endblock %}
+          </main>
         </div>
         <hr>
         {% block footer %}

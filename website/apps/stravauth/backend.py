@@ -20,17 +20,22 @@ class StravaV3Backend(object):
             return None
 
         access_token = response["access_token"]
+        print("porcone")
+        print(access_token)
+        # return
         user_id = response["athlete"]["id"]
-
+        print(user_id)
         # username must be unique hence use id
         username = "%s: %s %s" % (user_id, response["athlete"]["firstname"], response["athlete"]["lastname"])
-
+        print(username)
 
         # Get or create the user (returns tuple)
         try:
             user = User.objects.get(id=user_id)
+            print("caso1")
         except:
             user = User(id=user_id)
+            print("caso2")
 
         # Update username
         user.username = username

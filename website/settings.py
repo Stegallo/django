@@ -23,7 +23,7 @@ INSTALLED_APPS = (
 
     'social_django',
     'website.apps.core',
-    'website.apps.stravauth',
+    # 'website.apps.stravauth',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,9 +102,10 @@ LOGIN_REDIRECT_URL = 'home'
 
 AUTHENTICATION_BACKENDS = (
     # 'social_core.backends.github.GithubOAuth2',
-    # 'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
-    'website.apps.stravauth.backend.StravaV3Backend',
+    'social_core.backends.strava.StravaOAuth',
+    # 'website.apps.stravauth.backend.StravaV3Backend',
 
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -112,10 +113,10 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 
+
+SOCIAL_AUTH_STRAVA_KEY = config('CLIENT_ID')
+SOCIAL_AUTH_STRAVA_SECRET = config('CLIENT_SECRET')
+
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
-
-CLIENT_ID = config('CLIENT_ID')
-CLIENT_SECRET = config('CLIENT_SECRET')
-STRAVA_REDIRECT = "http://stegallo.com:8000/stravalogin/"

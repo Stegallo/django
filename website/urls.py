@@ -18,7 +18,3 @@ urlpatterns = [
     # url(r'^stravalogout/$', 'django.contrib.auth.views.logout', kwargs={'next_page': '/'}, name="stravalogout"),
     url(r'^admin/', admin.site.urls),
 ]
-
-# https://www.strava.com/oauth/authorize?client_id=6572&response_type=code&redirect_uri=home&approval_prompt=force&scope=write
-
-# /stravalogin/?state=&code=b430495dcb87002a7c2cba7682e2db8f14079c19

@@ -105,6 +105,7 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.strava.StravaOAuth',
+    'social_core.backends.moves.MovesOAuth2',
     # 'website.apps.stravauth.backend.StravaV3Backend',
 
     'django.contrib.auth.backends.ModelBackend',
@@ -116,6 +117,11 @@ SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 SOCIAL_AUTH_STRAVA_KEY = config('CLIENT_ID')
 SOCIAL_AUTH_STRAVA_SECRET = config('CLIENT_SECRET')
+
+SOCIAL_AUTH_MOVES_KEY = config('MOVES_ID')
+SOCIAL_AUTH_MOVES_SECRET = config('MOVES_SECRET')
+
+SOCIAL_AUTH_MOVES_SCOPE = ['activity', 'location']
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'

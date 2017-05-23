@@ -34,4 +34,21 @@
   {% else %}
     <a href="{% url 'social:begin' 'strava' %}">Connect to Strava</a>
   {% endif %}
+
+  <h3>Moves</h3>
+  {% if moves_login %}
+    <p>Connected as <!--a href="https://strava.com/athletes/{{ moves_login.uid }}/" target="_blank"-->{{ moves_login.uid}}<!--/a--></p>
+    {% if can_disconnect %}
+      <form method="post" action="{% url 'social:disconnect' 'moves' %}">
+        {% csrf_token %}
+        <button type="submit">Disconnect from Moves</button>
+      </form>
+    {% else %}
+      <button type="button" disabled>Disconnect from Moves</button>
+      <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Moves.</p>
+    {% endif %}
+  {% else %}
+    <a href="{% url 'social:begin' 'moves' %}">Connect to Moves</a>
+  {% endif %}
+
 {% endblock %}

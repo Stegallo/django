@@ -5,7 +5,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from social_django.models import UserSocialAuth
+import tripit
 
+from decouple import config
 
 from stravalib.client import Client
 
@@ -32,6 +34,23 @@ def signup(request):
 def home(request):
     user = request.user
     try:
+        tripit_login = user.social_auth.get(provider='tripit')
+        print(tripit_login.extra_data)
+    except UserSocialAuth.DoesNotExist:
+        tripit_login = None
+    # t = tripit.TripIt(config('SOCIAL_AUTH_TRIPIT_KEY'),config('SOCIAL_AUTH_TRIPIT_SECRET'),tripit_login.extra_data['access_token']['oauth_token'],tripit_login.extra_data['access_token']['oauth_token_secret'])
+    print(config('SOCIAL_AUTH_TRIPIT_KEY'))
+    print(config('SOCIAL_AUTH_TRIPIT_SECRET'))
+    print(tripit_login.extra_data['access_token']['oauth_token'])
+    print(tripit_login.extra_data['access_token']['oauth_token_secret'])
+
+    api_url='https://api.tripit.com'
+    oauth_credential = tripit.OAuthConsumerCredential(config('SOCIAL_AUTH_TRIPIT_KEY'),config('SOCIAL_AUTH_TRIPIT_SECRET'),tripit_login.extra_data['access_token']['oauth_token'],tripit_login.extra_data['access_token']['oauth_token_secret'])
+    # t = tripit.TripIt(oauth_credential, api_url = api_url)
+    # print(t)
+
+    # print(t.list_trip())
+    try:
         strava_login = user.social_auth.get(provider='strava')
         print(strava_login.uid)
         print(strava_login.extra_data['access_token'])
@@ -55,12 +74,12 @@ def home(request):
 
 #    StravaClient.access_token = user.athlete.stravatoken
 #    athlete = StravaClient.get_athlete()
-    return render(request, 'core/home.html', {'athlete':athlete, 'lastactivity':lastactivity})
+    return render(request, 'core/home.html', {'tripit_login': tripit_login})
 
 @login_required
 def settings(request):
     user = request.user
-
+    print(type(user.social_auth))
     try:
         github_login = user.social_auth.get(provider='github')
     except UserSocialAuth.DoesNotExist:
@@ -71,7 +90,7 @@ def settings(request):
         twitter_login = None
     try:
         facebook_login = user.social_auth.get(provider='facebook')
-        # print(facebook_login.extra_data)
+        print(facebook_login)
     except UserSocialAuth.DoesNotExist:
         facebook_login = None
     try:
@@ -84,13 +103,18 @@ def settings(request):
         # print(moves_login.uid)
     except UserSocialAuth.DoesNotExist:
         moves_login = None
-
+    try:
+        tripit_login = user.social_auth.get(provider='tripit')
+        print(tripit_login.extra_data)
+    except UserSocialAuth.DoesNotExist:
+        tripit_login = None
     can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
 
     return render(request, 'core/settings.html', {
         'facebook_login': facebook_login,
         'strava_login': strava_login,
         'moves_login': moves_login,
+        'tripit_login': tripit_login,
         'can_disconnect': can_disconnect
     })
 

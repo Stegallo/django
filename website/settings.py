@@ -36,7 +36,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+    # 'social_django.middleware.SocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'website.urls'
@@ -102,11 +102,12 @@ LOGIN_REDIRECT_URL = 'home'
 
 AUTHENTICATION_BACKENDS = (
     # 'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
+    # 'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.strava.StravaOAuth',
-    'social_core.backends.moves.MovesOAuth2',
+    # 'social_core.backends.strava.StravaOAuth',
+    # 'social_core.backends.moves.MovesOAuth2',
     # 'website.apps.stravauth.backend.StravaV3Backend',
+    'social_core.backends.tripit.TripItOAuth',
 
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -115,13 +116,16 @@ SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 
-SOCIAL_AUTH_STRAVA_KEY = config('CLIENT_ID')
-SOCIAL_AUTH_STRAVA_SECRET = config('CLIENT_SECRET')
+SOCIAL_AUTH_TRIPIT_KEY = config('SOCIAL_AUTH_TRIPIT_KEY')
+SOCIAL_AUTH_TRIPIT_SECRET = config('SOCIAL_AUTH_TRIPIT_SECRET')
 
-SOCIAL_AUTH_MOVES_KEY = config('MOVES_ID')
-SOCIAL_AUTH_MOVES_SECRET = config('MOVES_SECRET')
+# SOCIAL_AUTH_STRAVA_KEY = config('CLIENT_ID')
+# SOCIAL_AUTH_STRAVA_SECRET = config('CLIENT_SECRET')
 
-SOCIAL_AUTH_MOVES_SCOPE = ['activity', 'location']
+# SOCIAL_AUTH_MOVES_KEY = config('MOVES_ID')
+# SOCIAL_AUTH_MOVES_SECRET = config('MOVES_SECRET')
+
+# SOCIAL_AUTH_MOVES_SCOPE = ['activity', 'location']
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/settings/'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/settings/'

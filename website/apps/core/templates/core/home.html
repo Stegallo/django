@@ -3,11 +3,5 @@
 {% block content %}
   <h2>Homepage</h2>
   <p>Hello {{ user.username }}!</p>
-  {% if not athlete %}
-  You seem to be not authenticated with Strava. Check your <a href="{% url 'settings' %}">settings</a>
-  {% else %}
-    You did {{ lastactivity.type }} for {{ lastactivity.moving_time }} covering {{ lastactivity.distance }} <br>
-    <p>
-    <p> Well done! <br>
-  {% endif %}
+  Your activities on Tripit are recorded for username {{ tripit_login.extra_data.screen_name }}
   {% endblock %}
